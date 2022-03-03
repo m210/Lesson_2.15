@@ -279,7 +279,7 @@ public class IntArrayList implements IntList {
         arr[indexB] = tmp;
     }
 
-    private void sortBubble(Integer[] array) {
+    public void sortBubble(Integer[] array) {
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - 1 - i; j++) {
                 if (array[j] > array[j + 1]) {
@@ -289,7 +289,7 @@ public class IntArrayList implements IntList {
         }
     }
 
-    private void sortSelection(Integer[] array) {
+    public void sortSelection(Integer[] array) {
         for (int i = 0; i < array.length - 1; i++) {
             int minElementIndex = i;
             for (int j = i + 1; j < array.length; j++) {
@@ -301,7 +301,7 @@ public class IntArrayList implements IntList {
         }
     }
 
-    private void sortInsertion(Integer[] array) {
+    public void sortInsertion(Integer[] array) {
         for (int i = 1; i < array.length; i++) {
             int temp = array[i];
             int j = i;
@@ -311,23 +311,5 @@ public class IntArrayList implements IntList {
             }
             array[j] = temp;
         }
-    }
-
-    public void sortTest() {
-        long start = System.currentTimeMillis();
-        sortBubble(toArray()); // 38943 ms
-        System.out.println("sortBubble " + (System.currentTimeMillis() - start) + " ms");
-
-        start = System.currentTimeMillis();
-        sortSelection(toArray()); // 7743 ms
-        System.out.println("sortSelection " + (System.currentTimeMillis() - start) + " ms");
-
-        start = System.currentTimeMillis();
-        sortInsertion(toArray()); // 11997 ms
-        System.out.println("sortInsertion " + (System.currentTimeMillis() - start) + " ms");
-
-        start = System.currentTimeMillis();
-        Arrays.sort(toArray()); // 39 ms
-        System.out.println("Arrays.sort " + (System.currentTimeMillis() - start) + " ms");
     }
 }
