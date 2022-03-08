@@ -11,6 +11,10 @@ public class MainTest {
         IntArrayList list = new IntArrayList(Main.generateRandomArray(100_000));
 
         long start = System.currentTimeMillis();
+        list.mergeSort(list.toArray()); // 31 ms
+        System.out.println("mergeSort " + (System.currentTimeMillis() - start) + " ms");
+
+        start = System.currentTimeMillis();
         list.sortBubble(list.toArray()); // 38943 ms
         System.out.println("sortBubble " + (System.currentTimeMillis() - start) + " ms");
 

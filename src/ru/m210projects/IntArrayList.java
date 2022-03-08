@@ -16,8 +16,8 @@ public class IntArrayList implements IntList {
         size = src.length;
     }
 
-    private void extend() {
-        Integer[] newarray = new Integer[Math.max(16, size * size)];
+    private void grow() { //step 1
+        Integer[] newarray = new Integer[Math.max(16, (int) (size * 1.5f))];
         System.arraycopy(array, 0, newarray, 0, size);
         array = newarray;
     }
@@ -32,7 +32,7 @@ public class IntArrayList implements IntList {
             throw new NullPointerException("Item shouldn't be NULL");
 
         if(size >= array.length - 1) {
-            extend();
+            grow(); // step 2
         }
 
         array[size++] = item;
@@ -57,7 +57,7 @@ public class IntArrayList implements IntList {
         }
 
         if(size == array.length) {
-            extend();
+            grow(); // step 2
         }
 
         System.arraycopy(array, index, array, index + 1, size - index);
@@ -268,7 +268,7 @@ public class IntArrayList implements IntList {
 
     private Integer[] getSortedArray() {
         Integer[] sortedArray = toArray();
-        sortSelection(sortedArray);
+        mergeSort(sortedArray);
 //        Arrays.sort(sortedArray);
         return sortedArray;
     }
@@ -286,6 +286,42 @@ public class IntArrayList implements IntList {
                     swapElements(array, j, j + 1);
                 }
             }
+        }
+    }
+
+    public void mergeSort(Integer[] arr) {
+        if (arr.length < 2) {
+            return;
+        }
+        int mid = arr.length / 2;
+        Integer[] left = new Integer[mid];
+        Integer[] right = new Integer[arr.length - mid];
+
+        System.arraycopy(arr, 0, left, 0, left.length);
+        System.arraycopy(arr, mid, right, 0, right.length);
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(arr, left, right);
+    }
+
+    private void merge(Integer[] arr, Integer[] left, Integer[] right) {
+        int mainP = 0;
+        int leftP = 0;
+        int rightP = 0;
+        while (leftP < left.length && rightP < right.length) {
+            if (left[leftP] <= right[rightP]) {
+                arr[mainP++] = left[leftP++];
+            } else {
+                arr[mainP++] = right[rightP++];
+            }
+        }
+        while (leftP < left.length) {
+            arr[mainP++] = left[leftP++];
+        }
+        while (rightP < right.length) {
+            arr[mainP++] = right[rightP++];
         }
     }
 
